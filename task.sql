@@ -11,6 +11,6 @@ INSERT INTO OrderItems (OrderID, ProductID, Count)
 START TRANSACTION; 
 
 -- And some data should be created inside the transaction 
-UPDATE Products SET WarehouseAmount = WarehouseAmount - (SELECT Count FROM OrderItems WHERE ProductId = 1)
-WHERE ID = (SELECT ID FROM OrderItems WHERE ProductId = 1);
+UPDATE Products SET WarehouseAmount = WarehouseAmount - (SELECT Count FROM OrderItems WHERE ProductId = (SELECT ProductID FROM OrderItems WHERE OrderID = 1)) 
+WHERE ID = (SELECT ID FROM OrderItems WHERE ProductId = (SELECT ProductID FROM OrderItems WHERE OrderID = 1));
 COMMIT; 
